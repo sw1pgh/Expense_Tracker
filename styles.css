@@ -1,0 +1,384 @@
+:root {
+  --primary-color: #4361ee;
+  --secondary-color: #3f37c9;
+  --accent-color: #4895ef;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+  --success-color: #4cc9f0;
+  --danger-color: #f72585;
+  --warning-color: #ffbe0b;
+}
+
+* {
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  margin: 0;
+  padding: 20px;
+  color: var(--dark-color);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  /* max-height: auto; */
+  margin: auto;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 25px;
+  position: relative;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+h2:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: var(--primary-color);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 25px;
+  background: var(--light-color);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+/* Label Styles */
+label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--dark-color);
+  margin-bottom: 6px;
+  padding: 0 12px;
+  gap: 8px; /* Better spacing between label text and input */
+}
+
+/* Input, Select, and Button Styles */
+select,
+input,
+button {
+  width: 100%; /* Responsive width */
+  max-width: 150px; /* Prevents excessive stretching */
+  min-height: 48px; /* Slightly taller for a better feel */
+  padding: 12px 16px; /* Comfortable padding */
+  border-radius: 8px; /* Softer rounded corners */
+  border: 1.5px solid #ccc; /* Subtle border */
+  font-size: 1rem;
+  background-color: #fff;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Hover & Focus Effects */
+select:hover,
+input:hover,
+button:hover {
+  border-color: #007bff;
+}
+
+select:focus,
+input:focus,
+button:focus {
+  border-color: #0056b3;
+  outline: none;
+  box-shadow: 0px 0px 6px rgba(0, 91, 187, 0.4);
+}
+
+.add-btn-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: space-between;
+  align-items: center;
+  /* padding-top: 10px; */
+  border-radius: 8px;
+}
+
+.add-btn {
+  max-width: 200px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  font-weight: 500;
+  margin-right: 20px;
+  min-width: 200px;
+}
+
+.add-btn:hover {
+  background: var(--secondary-color);
+  transform: translateY(-2px);
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.modals {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+.expense-list {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0 3px;
+  }
+
+  th {
+    background: var(--primary-color);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:nth-child(odd) {
+    background-color: var(--light-color);
+  }
+
+  tr:nth-child(even) {
+    background-color: rgb(229, 230, 241);
+  }
+
+
+.action-btns {
+  display: flex;
+  gap: 8px;
+
+}
+
+.delete-btn,
+.edit-btn {
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.delete-btn {
+  background: var(--danger-color);
+}
+
+.edit-btn {
+  background: var(--accent-color);
+}
+
+.delete-btn:hover,
+.edit-btn:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.summary {
+  background: var(--light-color);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.summary-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.summary-card h4 {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.summary-card p {
+  margin: 10px 0 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.chart-container {
+  max-width: 300px;
+  max-height: 300px;
+  margin: 20px auto;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 500px;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal {
+  transform: translateY(0);
+}
+
+.modal h3 {
+  margin-top: 0;
+  color: var(--primary-color);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.modal-btn {
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+}
+
+.save-btn {
+  background: var(--primary-color);
+  color: white;
+  margin-right: 10px;
+  margin-right: 3rem;
+}
+
+.cancel-btn {
+  background: #f1f1f1;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background: #f1f1f1;
+  color: #333;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 30px;
+  color: #777;
+  display: none;
+}
+
+.empty-state i {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  color: #ddd;
+}
+
+.data-input {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+.inplace-edit {
+  display: flex;
+  gap: 8px;
+}
+
+.inplace-edit input {
+  flex: 1;
+}
+
+.currency {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+}
+
+.text-success {
+  color: var(--success-color);
+}
+
+.text-danger {
+  color: var(--danger-color);
+}
