@@ -205,7 +205,7 @@ function updateChart(totalBudget, totalExpenses, savings) {
       datasets: [
         {
           data: [totalExpenses, Math.max(0, savings)],
-          backgroundColor: ["#f72585", "#4cc9f0"],
+          backgroundColor: ["darkred", "green"],
         },
       ],
     },

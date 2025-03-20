@@ -5,7 +5,7 @@
   --light-color: #f8f9fa;
   --dark-color: #212529;
   --success-color: #4cc9f0;
-  --danger-color: #f72585;
+  --danger-color: rgb(234, 38, 38);
   --warning-color: #ffbe0b;
 }
 
@@ -232,6 +232,8 @@ tr:nth-child(even) {
 
 .action-btns {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 8px;
 }
 
@@ -240,23 +242,24 @@ tr:nth-child(even) {
   color: white;
   border: none;
   cursor: pointer;
-  padding: 3px 10px;
+  padding: 10px 18px;
   border-radius: 4px;
   font-size: 0.9rem;
 }
 
 .delete-btn {
-  background: var(--danger-color);
+  background: rgb(234, 38, 38);
 }
 
 .edit-btn {
   background: var(--accent-color);
 }
 
-.delete-btn:hover,
 .edit-btn:hover {
-  opacity: 0.9;
-  transform: scale(1.05);
+  background: var(--primary-color);
+}
+.delete-btn:hover {
+  background: darkred;
 }
 
 .summary {
