@@ -18,17 +18,17 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   margin: 0;
-  padding: 20px;
+  padding: clamp(10px, 2vw, 20px);
   color: var(--dark-color);
   min-height: 100vh;
 }
 
 .container {
-  max-width: 1200px;
-  /* max-height: auto; */
+  max-width: 1700px;
+  width: 100%;
   margin: auto;
   background: white;
-  padding: 30px;
+  padding: clamp(15px, 3vw, 30px);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
@@ -36,10 +36,11 @@ body {
 h2 {
   color: var(--primary-color);
   font-weight: 600;
-  margin-bottom: 25px;
+  margin-bottom: clamp(15px, 2.5vw, 25px);
   position: relative;
   padding-bottom: 10px;
   text-align: center;
+  font-size: clamp(1.5rem, 3vw, 2rem);
 }
 
 h2:after {
@@ -48,7 +49,7 @@ h2:after {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 80px;
+  width: clamp(60px, 8vw, 80px);
   height: 3px;
   background: var(--primary-color);
 }
@@ -56,59 +57,61 @@ h2:after {
 .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: clamp(10px, 1.5vw, 15px);
   justify-content: center;
-  margin-bottom: 25px;
+  margin-bottom: clamp(15px, 2.5vw, 25px);
   background: var(--light-color);
-  padding: 20px;
+  padding: clamp(15px, 2vw, 20px);
   border-radius: 8px;
 }
 
+.filter-group {
+  min-width: 120px;
+  flex: 1 1 150px;
+}
+
 .filter-group select {
-  appearance: none; /* Remove default arrow */
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 10px 15px;
-  font-size: 16px;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
   font-weight: 500;
   color: #333;
   cursor: pointer;
   width: 100%;
-  padding-right: 15px; /* Adjust padding */
+  padding-right: 15px;
 }
 
-/* Removes arrows on some browsers */
 .filter-group select::-ms-expand {
   display: none;
 }
 
-/* Label Styles */
 label {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
   font-weight: 500;
   color: var(--dark-color);
   margin-bottom: 6px;
   padding: 0 12px;
-  gap: 8px; /* Better spacing between label text and input */
+  gap: 8px;
 }
 
-/* Input, Select, and Button Styles */
 select,
 input,
 button {
-  width: auto; /* Responsive width */
-  max-width: 150px; /* Prevents excessive stretching */
-  min-height: 48px; /* Slightly taller for a better feel */
-  padding: 12px 16px; /* Comfortable padding */
-  border-radius: 8px; /* Softer rounded corners */
-  border: 1.5px solid #ccc; /* Subtle border */
-  font-size: 1rem;
+  width: 100%;
+  max-width: 100%;
+  min-height: 48px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1.5px solid #ccc;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
   background-color: #fff;
   transition: all 0.2s ease-in-out;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
@@ -116,9 +119,9 @@ button {
 
 #modalAmount,
 #modalDesc {
-  align-items: start;
-  min-width: 400px;
-  max-width: 500px;
+  min-width: unset;
+  max-width: 100%;
+  width: 100%;
 }
 
 #startAmount,
@@ -127,7 +130,6 @@ button {
   text-align: center;
 }
 
-/* Hover & Focus Effects */
 select:hover,
 input:hover,
 button:hover {
@@ -145,25 +147,26 @@ button:focus {
 .add-btn-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: clamp(10px, 1.5vw, 15px);
   justify-content: space-between;
   align-items: center;
-  /* padding-top: 10px; */
   border-radius: 8px;
+  margin-bottom: 15px;
 }
 
 .add-btn {
   max-width: 200px;
+  width: 100%;
   background: var(--primary-color);
   color: white;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: left;
+  justify-content: center;
   font-weight: 500;
-  margin-right: 20px;
-  min-width: 200px;
+  margin-right: 0;
+  min-width: unset;
 }
 
 .add-btn:hover {
@@ -173,33 +176,40 @@ button:focus {
 
 .dashboard {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: clamp(15px, 3vw, 30px);
   margin-top: 20px;
 }
 
 .modals {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: auto;
-  /* gap: 2px; */
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
 }
 
-@media (max-width: 768px) {
-  .dashboard {
-    grid-template-columns: 1fr;
+@media (min-width: 768px) {
+  .modals {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .add-btn {
+    margin-right: 20px;
   }
 }
 
 .expense-list {
   background: white;
   border-radius: 8px;
-  overflow: hidden;
+  overflow-x: auto;
+  width: 100%;
 }
 
 table {
   width: 100%;
+  min-width: 500px;
   border-collapse: collapse;
   border-spacing: 0 3px;
 }
@@ -207,13 +217,14 @@ table {
 th {
   background: var(--primary-color);
   color: white;
-  padding: 20px;
+  padding: clamp(10px, 2vw, 20px);
   text-align: center;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 td {
-  padding: 15px;
+  padding: clamp(8px, 1.5vw, 15px);
   border-bottom: 1px solid #eee;
   text-align: center;
 }
@@ -235,6 +246,7 @@ tr:nth-child(even) {
   justify-content: center;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .delete-btn,
@@ -242,13 +254,15 @@ tr:nth-child(even) {
   color: white;
   border: none;
   cursor: pointer;
-  padding: 10px 18px;
+  padding: 8px 12px;
   border-radius: 4px;
-  font-size: 0.9rem;
+  font-size: clamp(0.75rem, 1vw, 0.9rem);
+  min-height: unset;
+  width: auto;
 }
 
 .delete-btn {
-  background: rgb(234, 38, 38);
+  background: var(--danger-color);
 }
 
 .edit-btn {
@@ -258,47 +272,67 @@ tr:nth-child(even) {
 .edit-btn:hover {
   background: var(--primary-color);
 }
+
 .delete-btn:hover {
   background: darkred;
 }
 
 .summary {
   background: var(--light-color);
-  padding: 20px;
+  padding: clamp(15px, 2vw, 20px);
   border-radius: 8px;
   text-align: center;
+  width: 100%;
 }
 
 .summary-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  /* Change from fixed widths to auto-fit with a minimum width */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: clamp(10px, 1.5vw, 15px);
   margin-bottom: 20px;
 }
 
 .summary-card {
   background: white;
-  padding: 20px;
+  padding: clamp(15px, 2vw, 20px);
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  /* Add these properties for better text handling */
+  width: 100%;
+  min-width: 0; /* Allows the card to shrink below content size if needed */
+  overflow: hidden; /* Ensures content doesn't overflow */
+  transition: all 0.3s ease; /* Smooth transition for size changes */
 }
 
 .summary-card h4 {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
   color: #777;
+  /* Add this for better text wrapping */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 .summary-card p {
   margin: 10px 0 0;
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
   font-weight: 600;
+  /* Add this for better number handling */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  /* Make sure the numbers don't shrink too much */
+  white-space: nowrap;
+  overflow: scroll;
 }
 
 .chart-container {
-  max-width: 300px;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 1/1;
   max-height: 300px;
-  margin: 20px auto;
+  margin: 30px auto;
 }
 
 .modal-overlay {
@@ -315,6 +349,7 @@ tr:nth-child(even) {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
+  padding: 15px;
 }
 
 .modal-overlay.active {
@@ -324,12 +359,12 @@ tr:nth-child(even) {
 
 .modal {
   background: white;
-  padding: 30px;
+  padding: clamp(20px, 3vw, 30px);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  width: auto;
-  min-width: 400px;
+  width: 100%;
   max-width: 500px;
+  min-width: unset;
   transform: translateY(20px);
   transition: transform 0.3s ease;
 }
@@ -342,7 +377,7 @@ tr:nth-child(even) {
   margin-top: 0;
   color: var(--primary-color);
   font-weight: 600;
-  font-size: 20px;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
 }
 
 .form-group {
@@ -351,10 +386,12 @@ tr:nth-child(even) {
   justify-content: left;
   align-items: flex-start;
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .form-group label {
   padding: 0px 1.5px;
+  justify-content: flex-start;
 }
 
 .modal-btn {
@@ -370,12 +407,24 @@ tr:nth-child(even) {
   background: var(--primary-color);
   color: white;
   margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .cancel-btn {
   width: 100%;
-  background: rgb(234, 38, 38);
+  background: var(--danger-color);
   color: #eee;
+}
+
+@media (min-width: 480px) {
+  .modals {
+    flex-direction: row;
+    gap: 10px;
+  }
+  
+  .save-btn {
+    margin-bottom: 0;
+  }
 }
 
 .save-btn:hover {
@@ -390,13 +439,13 @@ tr:nth-child(even) {
 
 .empty-state {
   text-align: center;
-  padding: 30px;
+  padding: clamp(20px, 3vw, 30px);
   color: #777;
   display: none;
 }
 
 .empty-state i {
-  font-size: 3rem;
+  font-size: clamp(2rem, 3vw, 3rem);
   margin-bottom: 15px;
   color: #ddd;
 }
@@ -406,12 +455,13 @@ tr:nth-child(even) {
   padding: 12px 15px;
   border-radius: 6px;
   border: 1px solid #ddd;
-  font-size: 1rem;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
 }
 
 .inplace-edit {
   display: flex;
   gap: 8px;
+  width: 100%;
 }
 
 .inplace-edit input {
@@ -420,7 +470,7 @@ tr:nth-child(even) {
 
 .currency {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 16px;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
 }
 
 .text-success {
@@ -429,4 +479,15 @@ tr:nth-child(even) {
 
 .text-danger {
   color: var(--danger-color);
+}
+
+@media (max-width: 480px) {
+  .action-btns {
+    flex-direction: column;
+  }
+  
+  .delete-btn, 
+  .edit-btn {
+    width: 100%;
+  }
 }

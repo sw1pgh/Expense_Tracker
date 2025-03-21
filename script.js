@@ -10,7 +10,21 @@ window.onload = function () {
   loadData();
   renderTable();
   updateSummary();
+  
+  // Save initial state to ensure data persists across refreshes
+  saveFiltersState();
 };
+
+// Save filter state to sessionStorage
+function saveFiltersState() {
+  const currentYear = document.getElementById("yearSelect").value;
+  const currentMonth = document.getElementById("monthSelect").value;
+  const startAmount = document.getElementById("startAmount").value;
+  
+  sessionStorage.setItem('expenseTrackerYear', currentYear);
+  sessionStorage.setItem('expenseTrackerMonth', currentMonth);
+  sessionStorage.setItem('expenseTrackerBudget', startAmount);
+}
 
 // Populate year selection from 2023 to current year + 5
 const populateYears = () => {
@@ -25,11 +39,12 @@ const populateYears = () => {
     yearSelect.appendChild(option);
   }
 
-  // Set current year as default
-  yearSelect.value = currentYear;
+  // Set stored year as default, or current year if none stored
+  const storedYear = sessionStorage.getItem('expenseTrackerYear');
+  yearSelect.value = storedYear || currentYear;
 };
 
-// Initialize with current month
+// Initialize with stored month or current month
 const setCurrentMonth = () => {
   const months = [
     "January",
@@ -45,7 +60,20 @@ const setCurrentMonth = () => {
     "November",
     "December",
   ];
-  document.getElementById("monthSelect").value = months[new Date().getMonth()];
+  
+  const storedMonth = sessionStorage.getItem('expenseTrackerMonth');
+  
+  if (storedMonth && months.includes(storedMonth)) {
+    document.getElementById("monthSelect").value = storedMonth;
+  } else {
+    document.getElementById("monthSelect").value = months[new Date().getMonth()];
+  }
+  
+  // Set stored budget amount if available
+  const storedBudget = sessionStorage.getItem('expenseTrackerBudget');
+  if (storedBudget) {
+    document.getElementById("startAmount").value = storedBudget;
+  }
 };
 
 // Modal functions
@@ -91,7 +119,7 @@ function saveExpense() {
     expenses[currentEditIndex] = { desc, amount };
   }
 
-  saveData(); // Save to localStorage first
+  saveData(); // Save to sessionStorage first
   closeModal(); // Then close modal
   renderTable(); // Then render table
   updateSummary(); // Then update summary
@@ -154,6 +182,9 @@ function updateSummary() {
   document.getElementById("savings").textContent = savings.toFixed(2);
   document.getElementById("budgetPercentage").textContent = budgetUsed;
 
+  // Save budget value to sessionStorage
+  sessionStorage.setItem('expenseTrackerBudget', totalBudget);
+  
   updateChart(totalBudget, totalExpenses, savings);
 }
 
@@ -162,7 +193,11 @@ function saveData() {
   const currentMonth = document.getElementById("monthSelect").value;
   const storageKey = `expenses_${currentYear}_${currentMonth}`;
 
-  localStorage.setItem(storageKey, JSON.stringify(expenses));
+  // Save to sessionStorage
+  sessionStorage.setItem(storageKey, JSON.stringify(expenses));
+  
+  // Save current filters state
+  saveFiltersState();
 }
 
 function loadData() {
@@ -170,7 +205,7 @@ function loadData() {
   const currentMonth = document.getElementById("monthSelect").value;
   const storageKey = `expenses_${currentYear}_${currentMonth}`;
 
-  const storedData = localStorage.getItem(storageKey);
+  const storedData = sessionStorage.getItem(storageKey);
   if (storedData) {
     expenses = JSON.parse(storedData);
   } else {
@@ -180,14 +215,22 @@ function loadData() {
 
 // Add event listeners for year and month changes
 document.getElementById("yearSelect").addEventListener("change", function () {
+  saveFiltersState();
   loadData();
   renderTable();
   updateSummary();
 });
 
 document.getElementById("monthSelect").addEventListener("change", function () {
+  saveFiltersState();
   loadData();
   renderTable();
+  updateSummary();
+});
+
+// Add event listener for budget amount changes
+document.getElementById("startAmount").addEventListener("change", function() {
+  saveFiltersState();
   updateSummary();
 });
 
