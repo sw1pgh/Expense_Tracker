@@ -26,7 +26,7 @@ const populateYears = () => {
   }
 
   // Set stored year as default, or current year if none stored
-  const storedYear = sessionStorage.getItem('expenseTrackerYear');
+  const storedYear = sessionStorage.getItem("expenseTrackerYear");
   yearSelect.value = storedYear || currentYear;
 };
 
@@ -46,13 +46,14 @@ const setCurrentMonth = () => {
     "November",
     "December",
   ];
-  
-  const storedMonth = sessionStorage.getItem('expenseTrackerMonth');
-  
+
+  const storedMonth = sessionStorage.getItem("expenseTrackerMonth");
+
   if (storedMonth && months.includes(storedMonth)) {
     document.getElementById("monthSelect").value = storedMonth;
   } else {
-    document.getElementById("monthSelect").value = months[new Date().getMonth()];
+    document.getElementById("monthSelect").value =
+      months[new Date().getMonth()];
   }
 };
 
@@ -78,8 +79,8 @@ function getBudgetKey() {
 // Save current year and month to session storage
 function saveCurrentSelection() {
   const { year, month } = getCurrentYearMonth();
-  sessionStorage.setItem('expenseTrackerYear', year);
-  sessionStorage.setItem('expenseTrackerMonth', month);
+  sessionStorage.setItem("expenseTrackerYear", year);
+  sessionStorage.setItem("expenseTrackerMonth", month);
 }
 
 // Load expenses and budget for the current year/month
@@ -87,14 +88,14 @@ function loadExpensesAndBudget() {
   // Clear current data
   expenses = [];
   document.getElementById("startAmount").value = "0";
-  
+
   // Load expenses
   const storageKey = getStorageKey();
   const storedData = sessionStorage.getItem(storageKey);
   if (storedData) {
     expenses = JSON.parse(storedData);
   }
-  
+
   // Load budget
   const budgetKey = getBudgetKey();
   const storedBudget = sessionStorage.getItem(budgetKey);
@@ -103,7 +104,7 @@ function loadExpensesAndBudget() {
   } else {
     document.getElementById("startAmount").value = "0";
   }
-  
+
   // Save the current selection to session storage
   saveCurrentSelection();
 }
@@ -211,7 +212,8 @@ function deleteExpense(index) {
 }
 
 function updateSummary() {
-  const totalBudget = parseFloat(document.getElementById("startAmount").value) || 0;
+  const totalBudget =
+    parseFloat(document.getElementById("startAmount").value) || 0;
   const totalExpenses = expenses.reduce(
     (sum, expense) => sum + expense.amount,
     0
@@ -221,13 +223,14 @@ function updateSummary() {
     totalBudget > 0 ? ((totalExpenses / totalBudget) * 100).toFixed(2) : 0;
 
   document.getElementById("totalBudget").textContent = totalBudget.toFixed(2);
-  document.getElementById("totalExpenses").textContent = totalExpenses.toFixed(2);
+  document.getElementById("totalExpenses").textContent =
+    totalExpenses.toFixed(2);
   document.getElementById("savings").textContent = savings.toFixed(2);
   document.getElementById("budgetPercentage").textContent = budgetUsed;
 
   // Save budget
   saveBudget();
-  
+
   updateChart(totalBudget, totalExpenses, savings);
 }
 
@@ -247,7 +250,7 @@ document.getElementById("monthSelect").addEventListener("change", function () {
 });
 
 // Add event listener for budget amount changes
-document.getElementById("startAmount").addEventListener("change", function() {
+document.getElementById("startAmount").addEventListener("change", function () {
   // Just update the summary which will save the budget
   updateSummary();
 });
@@ -273,6 +276,25 @@ function updateChart(totalBudget, totalExpenses, savings) {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      cutout: "65%",
+      layout: {
+        padding: {
+          top: 15,
+        },
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: "right",
+          fullSize: false,
+          labels: {
+            color: "white",
+            font: {
+              size: 14,
+            },
+          },
+        },
+      },
     },
   });
 }

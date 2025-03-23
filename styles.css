@@ -21,11 +21,15 @@ body {
   padding: clamp(10px, 2vw, 20px);
   color: var(--dark-color);
   min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .container {
-  max-width: 1700px;
   width: 100%;
+  height: 100%;
   margin: auto;
   background: rgb(23, 23, 23);
   padding: clamp(15px, 3vw, 30px);
@@ -34,40 +38,64 @@ body {
 }
 
 h2 {
-  color: var(--primary-color);
-  font-weight: 600;
+  font-weight: 600; /* Slightly bolder for better contrast */
   margin-bottom: clamp(15px, 2.5vw, 25px);
   position: relative;
-  margin-top: -10px;
-  padding-bottom: 15px;
+  margin-top: -5px;
+  padding-bottom: 20px;
   text-align: center;
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1.8rem, 3.8vw, 2.8rem);
   text-transform: uppercase;
-  background: linear-gradient(90deg, 
-    var(--primary-color), 
-    var(--accent-color), 
-    var(--success-color), 
-    var(--warning-color), 
+  letter-spacing: 1.5px; /* Improves modern look */
+  display: inline-block;
+  white-space: nowrap; /* Prevents awkward wrapping */
+
+  /* Elegant Gradient */
+  background: linear-gradient(
+    90deg,
+    var(--primary-color),
+    var(--accent-color),
+    var(--success-color),
+    var(--warning-color),
     var(--danger-color),
     var(--primary-color)
   );
-  background-size: 500% 500%;
+  background-size: 400% 400%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: movingGradient 10s infinite linear;
-  display: inline-block;
 }
 
-h2:after {
+/* Smooth Gradient Animation */
+@keyframes movingGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+h2::after {
   content: "";
   position: absolute;
-  bottom: 0;
   left: 50%;
-  transform: translateX(-50%);
-  width: clamp(60px, 8vw, 80px);
+  bottom: -5px;
+  width: 60%;
   height: 3px;
-  background: var(--primary-color);
+  background: linear-gradient(
+    90deg,
+    var(--primary-color),
+    var(--accent-color),
+    var(--success-color),
+    var(--warning-color),
+    var(--danger-color),
+    var(--primary-color)
+  );
+  background-size: 400% 400%;
+  animation: movingGradient 10s infinite linear;
+  transform: translateX(-50%);
+  border-radius: 5px;
+  margin-bottom: 15px;
 }
+
 
 .filters {
   display: flex;
@@ -210,7 +238,7 @@ button:focus {
     justify-content: space-between;
     align-items: center;
   }
-  
+
   .add-btn {
     margin-right: 20px;
   }
@@ -224,7 +252,6 @@ button:focus {
   max-height: 60vh; /* Adjust as needed */
   min-height: 300px; /* Ensures a minimum height */
 }
-
 
 /* Optional: Fix table header while scrolling */
 .expense-list table {
@@ -243,11 +270,12 @@ button:focus {
 .moving-gradient-text {
   font-size: clamp(0.8rem, 1.8vw, 1.2rem);
   font-weight: bold;
-  background: linear-gradient(90deg, 
-    var(--primary-color), 
-    var(--accent-color), 
-    var(--success-color), 
-    var(--warning-color), 
+  background: linear-gradient(
+    90deg,
+    var(--primary-color),
+    var(--accent-color),
+    var(--success-color),
+    var(--warning-color),
     var(--danger-color),
     var(--primary-color)
   );
@@ -259,8 +287,12 @@ button:focus {
 }
 
 @keyframes movingGradient {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
 }
 
 table {
@@ -289,12 +321,12 @@ tr:last-child td {
 }
 
 tr:nth-child(odd) {
-  background-color: rgb(41, 41, 41);
+  background-color: rgb(39, 39, 39);
   color: white;
 }
 
 tr:nth-child(even) {
-  background-color: rgb(50, 50, 50);
+  background-color: rgb(54, 54, 54);
   color: white;
 }
 
@@ -337,59 +369,63 @@ tr:nth-child(even) {
 .summary {
   background: var(--dark-color);
   padding: clamp(15px, 2vw, 20px);
-  border-radius: 8px;
+  border-radius: 12px; /* Slightly increased for a modern look */
   text-align: center;
   width: 100%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
 
 .summary-grid {
   display: grid;
-  /* Change from fixed widths to auto-fit with a minimum width */
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: clamp(10px, 1.5vw, 15px);
   margin-bottom: 20px;
+  align-items: stretch; /* Ensures all cards have equal height */
 }
 
 .summary-card {
-  background: rgb(0, 0, 0);
+  background: #121212; /* Slightly lighter than pure black for contrast */
   padding: clamp(15px, 2vw, 20px);
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  /* Add these properties for better text handling */
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   width: 100%;
-  min-width: 0; /* Allows the card to shrink below content size if needed */
-  overflow: hidden; /* Ensures content doesn't overflow */
-  transition: all 0.3s ease; /* Smooth transition for size changes */
+  min-width: 0;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out, box-shadow 0.3s ease; /* Smooth effect */
+}
+
+.summary-card:hover {
+  transform: translateY(-3px); /* Slight hover effect */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 .summary-card h4 {
   margin: 0;
-  font-size: clamp(0.8rem, 1vw, 0.9rem);
-  color: rgb(169, 169, 169);
-  /* Add this for better text wrapping */
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  color: rgb(200, 200, 200);
+  text-transform: uppercase; /* Improves readability */
   overflow-wrap: break-word;
   word-wrap: break-word;
   hyphens: auto;
 }
 
 .summary-card p {
-  margin: 10px 0 0;
-  font-size: clamp(1.2rem, 2vw, 1.5rem);
-  font-weight: 600;
-  /* Add this for better number handling */
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  /* Make sure the numbers don't shrink too much */
+  margin: 12px 0 0;
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+  font-weight: 450;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   white-space: nowrap;
-  overflow: scroll;
-  color: rgb(226, 226, 226);
+  overflow: hidden;
+  text-overflow: ellipsis; /* Ensures numbers don’t break the layout */
+  color: rgb(245, 245, 245);
 }
 
 .chart-container {
   display: flex;
-  max-width: 100%;
-  height: auto;
-  aspect-ratio: 1/1;
+  justify-content: center; /* Centers the chart */
+  align-items: center;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   max-height: 250px;
   margin: 10px auto;
 }
@@ -480,7 +516,7 @@ tr:nth-child(even) {
     flex-direction: row;
     gap: 10px;
   }
-  
+
   .save-btn {
     margin-bottom: 0;
   }
@@ -546,8 +582,8 @@ tr:nth-child(even) {
   .action-btns {
     flex-direction: column;
   }
-  
-  .delete-btn, 
+
+  .delete-btn,
   .edit-btn {
     width: 100%;
   }
