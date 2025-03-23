@@ -7,24 +7,10 @@ let chart = null;
 window.onload = function () {
   populateYears();
   setCurrentMonth();
-  loadData();
+  loadExpensesAndBudget();
   renderTable();
   updateSummary();
-  
-  // Save initial state to ensure data persists across refreshes
-  saveFiltersState();
 };
-
-// Save filter state to sessionStorage
-function saveFiltersState() {
-  const currentYear = document.getElementById("yearSelect").value;
-  const currentMonth = document.getElementById("monthSelect").value;
-  const startAmount = document.getElementById("startAmount").value;
-  
-  sessionStorage.setItem('expenseTrackerYear', currentYear);
-  sessionStorage.setItem('expenseTrackerMonth', currentMonth);
-  sessionStorage.setItem('expenseTrackerBudget', startAmount);
-}
 
 // Populate year selection from 2023 to current year + 5
 const populateYears = () => {
@@ -68,13 +54,72 @@ const setCurrentMonth = () => {
   } else {
     document.getElementById("monthSelect").value = months[new Date().getMonth()];
   }
-  
-  // Set stored budget amount if available
-  const storedBudget = sessionStorage.getItem('expenseTrackerBudget');
-  if (storedBudget) {
-    document.getElementById("startAmount").value = storedBudget;
-  }
 };
+
+// Get the currently selected year and month
+function getCurrentYearMonth() {
+  const year = document.getElementById("yearSelect").value;
+  const month = document.getElementById("monthSelect").value;
+  return { year, month };
+}
+
+// Get the storage key for the current year/month
+function getStorageKey() {
+  const { year, month } = getCurrentYearMonth();
+  return `expenses_${year}_${month}`;
+}
+
+// Get the budget key for the current year/month
+function getBudgetKey() {
+  const { year, month } = getCurrentYearMonth();
+  return `budget_${year}_${month}`;
+}
+
+// Save current year and month to session storage
+function saveCurrentSelection() {
+  const { year, month } = getCurrentYearMonth();
+  sessionStorage.setItem('expenseTrackerYear', year);
+  sessionStorage.setItem('expenseTrackerMonth', month);
+}
+
+// Load expenses and budget for the current year/month
+function loadExpensesAndBudget() {
+  // Clear current data
+  expenses = [];
+  document.getElementById("startAmount").value = "0";
+  
+  // Load expenses
+  const storageKey = getStorageKey();
+  const storedData = sessionStorage.getItem(storageKey);
+  if (storedData) {
+    expenses = JSON.parse(storedData);
+  }
+  
+  // Load budget
+  const budgetKey = getBudgetKey();
+  const storedBudget = sessionStorage.getItem(budgetKey);
+  if (storedBudget !== null) {
+    document.getElementById("startAmount").value = storedBudget;
+  } else {
+    document.getElementById("startAmount").value = "0";
+  }
+  
+  // Save the current selection to session storage
+  saveCurrentSelection();
+}
+
+// Save expenses for current year/month
+function saveExpenses() {
+  const storageKey = getStorageKey();
+  sessionStorage.setItem(storageKey, JSON.stringify(expenses));
+}
+
+// Save budget for current year/month
+function saveBudget() {
+  const budgetKey = getBudgetKey();
+  const budget = document.getElementById("startAmount").value || "0";
+  sessionStorage.setItem(budgetKey, budget);
+}
 
 // Modal functions
 function openModal() {
@@ -119,7 +164,7 @@ function saveExpense() {
     expenses[currentEditIndex] = { desc, amount };
   }
 
-  saveData(); // Save to sessionStorage first
+  saveExpenses(); // Save to sessionStorage first
   closeModal(); // Then close modal
   renderTable(); // Then render table
   updateSummary(); // Then update summary
@@ -159,15 +204,14 @@ function renderTable() {
 function deleteExpense(index) {
   if (confirm("Are you sure you want to delete this expense?")) {
     expenses.splice(index, 1);
-    saveData();
+    saveExpenses();
     renderTable();
     updateSummary();
   }
 }
 
 function updateSummary() {
-  const totalBudget =
-    parseFloat(document.getElementById("startAmount").value) || 0;
+  const totalBudget = parseFloat(document.getElementById("startAmount").value) || 0;
   const totalExpenses = expenses.reduce(
     (sum, expense) => sum + expense.amount,
     0
@@ -177,60 +221,34 @@ function updateSummary() {
     totalBudget > 0 ? ((totalExpenses / totalBudget) * 100).toFixed(2) : 0;
 
   document.getElementById("totalBudget").textContent = totalBudget.toFixed(2);
-  document.getElementById("totalExpenses").textContent =
-    totalExpenses.toFixed(2);
+  document.getElementById("totalExpenses").textContent = totalExpenses.toFixed(2);
   document.getElementById("savings").textContent = savings.toFixed(2);
   document.getElementById("budgetPercentage").textContent = budgetUsed;
 
-  // Save budget value to sessionStorage
-  sessionStorage.setItem('expenseTrackerBudget', totalBudget);
+  // Save budget
+  saveBudget();
   
   updateChart(totalBudget, totalExpenses, savings);
 }
 
-function saveData() {
-  const currentYear = document.getElementById("yearSelect").value;
-  const currentMonth = document.getElementById("monthSelect").value;
-  const storageKey = `expenses_${currentYear}_${currentMonth}`;
-
-  // Save to sessionStorage
-  sessionStorage.setItem(storageKey, JSON.stringify(expenses));
-  
-  // Save current filters state
-  saveFiltersState();
-}
-
-function loadData() {
-  const currentYear = document.getElementById("yearSelect").value;
-  const currentMonth = document.getElementById("monthSelect").value;
-  const storageKey = `expenses_${currentYear}_${currentMonth}`;
-
-  const storedData = sessionStorage.getItem(storageKey);
-  if (storedData) {
-    expenses = JSON.parse(storedData);
-  } else {
-    expenses = [];
-  }
-}
-
 // Add event listeners for year and month changes
 document.getElementById("yearSelect").addEventListener("change", function () {
-  saveFiltersState();
-  loadData();
+  // Load data for the new year/month
+  loadExpensesAndBudget();
   renderTable();
   updateSummary();
 });
 
 document.getElementById("monthSelect").addEventListener("change", function () {
-  saveFiltersState();
-  loadData();
+  // Load data for the new year/month
+  loadExpensesAndBudget();
   renderTable();
   updateSummary();
 });
 
 // Add event listener for budget amount changes
 document.getElementById("startAmount").addEventListener("change", function() {
-  saveFiltersState();
+  // Just update the summary which will save the budget
   updateSummary();
 });
 
