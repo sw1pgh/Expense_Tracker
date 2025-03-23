@@ -1,5 +1,5 @@
 :root {
-  --primary-color: #4361ee;
+  --primary-color: #4684d6;
   --secondary-color: #3f37c9;
   --accent-color: #4895ef;
   --light-color: #f8f9fa;
@@ -16,7 +16,7 @@
 
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(135deg, #000000 0%, #000000 100%);
   margin: 0;
   padding: clamp(10px, 2vw, 20px);
   color: var(--dark-color);
@@ -27,7 +27,7 @@ body {
   max-width: 1700px;
   width: 100%;
   margin: auto;
-  background: white;
+  background: rgb(23, 23, 23);
   padding: clamp(15px, 3vw, 30px);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -40,7 +40,7 @@ h2 {
   position: relative;
   padding-bottom: 10px;
   text-align: center;
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(2rem, 4vw, 3rem);
 }
 
 h2:after {
@@ -60,7 +60,7 @@ h2:after {
   gap: clamp(10px, 1.5vw, 15px);
   justify-content: center;
   margin-bottom: clamp(15px, 2.5vw, 25px);
-  background: var(--light-color);
+  background: var(--dark-color);
   padding: clamp(15px, 2vw, 20px);
   border-radius: 8px;
 }
@@ -74,13 +74,13 @@ h2:after {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-color: white;
-  border: 1px solid #ccc;
+  background-color: #000000;
+  border: 1px solid #535353;
   border-radius: 8px;
   padding: 10px 15px;
   font-size: clamp(0.875rem, 1.5vw, 1rem);
   font-weight: 500;
-  color: #333;
+  color: white;
   cursor: pointer;
   width: 100%;
   padding-right: 15px;
@@ -96,7 +96,7 @@ label {
   align-items: center;
   font-size: clamp(0.9rem, 1.5vw, 1.2rem);
   font-weight: 500;
-  color: var(--dark-color);
+  color: var(--light-color);
   margin-bottom: 6px;
   padding: 0 12px;
   gap: 8px;
@@ -110,9 +110,10 @@ button {
   min-height: 48px;
   padding: 12px 16px;
   border-radius: 8px;
-  border: 1.5px solid #ccc;
+  border: 1px solid #535353;
   font-size: clamp(0.875rem, 1.5vw, 1rem);
-  background-color: #fff;
+  background-color: #000000;
+  color: white;
   transition: all 0.2s ease-in-out;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
 }
@@ -157,7 +158,7 @@ button:focus {
 .add-btn {
   max-width: 200px;
   width: 100%;
-  background: var(--primary-color);
+  background: #243ba5;
   color: white;
   border: none;
   cursor: pointer;
@@ -201,10 +202,34 @@ button:focus {
 }
 
 .expense-list {
-  background: white;
+  background: var(--dark-color);
   border-radius: 8px;
   overflow-x: auto;
   width: 100%;
+}
+
+.moving-gradient-text {
+  font-size: clamp(0.8rem, 1.8vw, 1.2rem);
+  font-weight: bold;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, 
+    var(--primary-color), 
+    var(--accent-color), 
+    var(--success-color), 
+    var(--warning-color), 
+    var(--danger-color),
+    var(--primary-color)
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: movingGradient 3s infinite linear;
+  display: inline-block;
+}
+
+@keyframes movingGradient {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
 }
 
 table {
@@ -215,7 +240,7 @@ table {
 }
 
 th {
-  background: var(--primary-color);
+  background: #225599;
   color: white;
   padding: clamp(10px, 2vw, 20px);
   text-align: center;
@@ -225,7 +250,6 @@ th {
 
 td {
   padding: clamp(8px, 1.5vw, 15px);
-  border-bottom: 1px solid #eee;
   text-align: center;
 }
 
@@ -234,11 +258,13 @@ tr:last-child td {
 }
 
 tr:nth-child(odd) {
-  background-color: var(--light-color);
+  background-color: rgb(41, 41, 41);
+  color: white;
 }
 
 tr:nth-child(even) {
-  background-color: rgb(229, 230, 241);
+  background-color: rgb(50, 50, 50);
+  color: white;
 }
 
 .action-btns {
@@ -278,7 +304,7 @@ tr:nth-child(even) {
 }
 
 .summary {
-  background: var(--light-color);
+  background: var(--dark-color);
   padding: clamp(15px, 2vw, 20px);
   border-radius: 8px;
   text-align: center;
@@ -294,7 +320,7 @@ tr:nth-child(even) {
 }
 
 .summary-card {
-  background: white;
+  background: rgb(0, 0, 0);
   padding: clamp(15px, 2vw, 20px);
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
@@ -308,7 +334,7 @@ tr:nth-child(even) {
 .summary-card h4 {
   margin: 0;
   font-size: clamp(0.8rem, 1vw, 0.9rem);
-  color: #777;
+  color: rgb(169, 169, 169);
   /* Add this for better text wrapping */
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -325,6 +351,7 @@ tr:nth-child(even) {
   /* Make sure the numbers don't shrink too much */
   white-space: nowrap;
   overflow: scroll;
+  color: rgb(226, 226, 226);
 }
 
 .chart-container {
@@ -358,7 +385,7 @@ tr:nth-child(even) {
 }
 
 .modal {
-  background: white;
+  background: #181a1b;
   padding: clamp(20px, 3vw, 30px);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -451,11 +478,13 @@ tr:nth-child(even) {
 }
 
 .data-input {
+  background-color: #3a3e41;
   width: 100%;
   padding: 12px 15px;
   border-radius: 6px;
   border: 1px solid #ddd;
   font-size: clamp(0.875rem, 1.5vw, 1rem);
+  color: white;
 }
 
 .inplace-edit {
