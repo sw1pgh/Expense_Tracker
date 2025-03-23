@@ -29,28 +29,48 @@ body {
 
 .container {
   width: 100%;
+  max-width: 1400px; /* Added max-width for large screens */
   height: 100%;
   margin: auto;
   background: rgb(23, 23, 23);
   padding: clamp(15px, 3vw, 30px);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.logout-btn {
+  position: absolute;
+  top: clamp(10px, 3vw, 28px); /* Responsive positioning */
+  right: clamp(10px, 3vw, 30px);
+  max-width: 100px;
+  font-size: clamp(0.8rem, 1vw, 1rem);
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: clamp(8px, 1vw, 12px);
 }
 
 h2 {
-  font-weight: 600; /* Slightly bolder for better contrast */
+  margin-left: 0;
+  font-weight: 600;
   margin-bottom: clamp(15px, 2.5vw, 25px);
   position: relative;
   margin-top: -5px;
   padding-bottom: 20px;
-  text-align: center;
-  font-size: clamp(1.8rem, 3.8vw, 2.8rem);
+  text-align: left;
+  font-size: clamp(1rem, 2.5vw, 2rem);
   text-transform: uppercase;
-  letter-spacing: 1.5px; /* Improves modern look */
-  display: inline-block;
-  white-space: nowrap; /* Prevents awkward wrapping */
-
-  /* Elegant Gradient */
+  letter-spacing: 1.5px;
+  display: block;
+  overflow: hidden; /* Prevent overflow on small screens */
+  text-overflow: ellipsis; /* Add ellipsis if text overflows */
   background: linear-gradient(
     90deg,
     var(--primary-color),
@@ -66,19 +86,12 @@ h2 {
   animation: movingGradient 10s infinite linear;
 }
 
-/* Smooth Gradient Animation */
-@keyframes movingGradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
 h2::after {
   content: "";
   position: absolute;
-  left: 50%;
+  left: 10%;
   bottom: -5px;
-  width: 60%;
+  width: 30%;
   height: 3px;
   background: linear-gradient(
     90deg,
@@ -91,11 +104,21 @@ h2::after {
   );
   background-size: 400% 400%;
   animation: movingGradient 10s infinite linear;
-  transform: translateX(-50%);
   border-radius: 5px;
   margin-bottom: 15px;
 }
 
+@keyframes movingGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 
 .filters {
   display: flex;
@@ -109,8 +132,8 @@ h2::after {
 }
 
 .filter-group {
-  min-width: 120px;
-  flex: 1 1 150px;
+  min-width: 100px; /* Reduced from 120px for better fitting on small screens */
+  flex: 1 1 120px; /* Reduced from 150px for better fit on mobile */
 }
 
 .filter-group select {
@@ -121,7 +144,7 @@ h2::after {
   border: 1px solid #535353;
   border-radius: 8px;
   padding: 10px 15px;
-  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
   font-weight: 500;
   color: white;
   cursor: pointer;
@@ -137,12 +160,15 @@ label {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+  font-size: clamp(0.8rem, 1.5vw, 1.2rem);
   font-weight: 500;
   color: var(--light-color);
   margin-bottom: 6px;
   padding: 0 12px;
   gap: 8px;
+  white-space: nowrap; /* Prevent wrapping in labels */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 select,
@@ -150,15 +176,24 @@ input,
 button {
   width: 100%;
   max-width: 100%;
-  min-height: 48px;
-  padding: 12px 16px;
+  min-height: 40px; /* Reduced from 48px for mobile */
+  padding: 10px 16px; /* Reduced padding for smaller screens */
   border-radius: 8px;
   border: 1px solid #535353;
-  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
   background-color: #000000;
   color: white;
   transition: all 0.2s ease-in-out;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+@media (min-width: 768px) {
+  select,
+  input,
+  button {
+    min-height: 48px;
+    padding: 12px 16px;
+  }
 }
 
 #modalAmount,
@@ -220,7 +255,7 @@ button:focus {
 
 .dashboard {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: clamp(15px, 3vw, 30px);
   margin-top: 20px;
 }
@@ -248,22 +283,29 @@ button:focus {
   background: var(--dark-color);
   border-radius: 8px;
   width: 100%;
-  overflow-y: auto; /* Enables vertical scrolling */
-  max-height: 60vh; /* Adjust as needed */
-  min-height: 300px; /* Ensures a minimum height */
+  overflow-x: auto; /* Enable horizontal scrolling for tables */
+  overflow-y: auto;
+  max-height: 60vh;
+  min-height: 300px;
 }
 
-/* Optional: Fix table header while scrolling */
 .expense-list table {
   width: 100%;
   border-collapse: collapse;
   position: relative;
+  table-layout: fixed; /* Improves table rendering on mobile */
+}
+
+@media (max-width: 600px) {
+  .expense-list table {
+    min-width: 100%; /* Make sure table fits content on mobile */
+  }
 }
 
 .expense-list thead {
   position: sticky;
   top: 0;
-  background: #225599; /* Matches the existing header color */
+  background: #225599;
   z-index: 2;
 }
 
@@ -286,15 +328,6 @@ button:focus {
   display: inline-block;
 }
 
-@keyframes movingGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
-}
-
 table {
   width: 100%;
   min-width: 500px;
@@ -305,15 +338,27 @@ table {
 th {
   background: #225599;
   color: white;
-  padding: clamp(10px, 2vw, 20px);
+  padding: clamp(8px, 2vw, 20px);
   text-align: center;
   font-weight: 500;
   white-space: nowrap;
+  font-size: clamp(0.7rem, 1.2vw, 1rem);
 }
 
 td {
-  padding: clamp(8px, 1.5vw, 15px);
+  padding: clamp(6px, 1.5vw, 15px);
   text-align: center;
+  font-size: clamp(0.7rem, 1.2vw, 1rem);
+  white-space: nowrap; /* Prevent text wrapping in cells */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Make description column wrap if needed */
+td:nth-child(2) {
+  white-space: normal;
+  word-wrap: break-word;
+  max-width: 150px; /* Set a max width for the description */
 }
 
 tr:last-child td {
@@ -334,7 +379,7 @@ tr:nth-child(even) {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 4px; /* Reduced from 8px for mobile */
   flex-wrap: wrap;
 }
 
@@ -343,11 +388,22 @@ tr:nth-child(even) {
   color: white;
   border: none;
   cursor: pointer;
-  padding: 8px 12px;
+  padding: 6px 10px; /* Reduced from 8px 12px for mobile */
   border-radius: 4px;
-  font-size: clamp(0.75rem, 1vw, 0.9rem);
+  font-size: clamp(0.7rem, 1vw, 0.9rem);
   min-height: unset;
   width: auto;
+}
+
+@media (min-width: 768px) {
+  .action-btns {
+    gap: 8px;
+  }
+  
+  .delete-btn,
+  .edit-btn {
+    padding: 8px 12px;
+  }
 }
 
 .delete-btn {
@@ -369,41 +425,41 @@ tr:nth-child(even) {
 .summary {
   background: var(--dark-color);
   padding: clamp(15px, 2vw, 20px);
-  border-radius: 12px; /* Slightly increased for a modern look */
+  border-radius: 12px;
   text-align: center;
   width: 100%;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .summary-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Reduced from 250px for better mobile fit */
   gap: clamp(10px, 1.5vw, 15px);
   margin-bottom: 20px;
-  align-items: stretch; /* Ensures all cards have equal height */
+  align-items: stretch;
 }
 
 .summary-card {
-  background: #121212; /* Slightly lighter than pure black for contrast */
-  padding: clamp(15px, 2vw, 20px);
+  background: #121212;
+  padding: clamp(10px, 2vw, 20px);
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   width: 100%;
   min-width: 0;
   overflow: hidden;
-  transition: transform 0.2s ease-in-out, box-shadow 0.3s ease; /* Smooth effect */
+  transition: transform 0.2s ease-in-out, box-shadow 0.3s ease;
 }
 
 .summary-card:hover {
-  transform: translateY(-3px); /* Slight hover effect */
+  transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 .summary-card h4 {
   margin: 0;
-  font-size: clamp(0.9rem, 1vw, 1rem);
+  font-size: clamp(0.8rem, 1vw, 1rem);
   color: rgb(200, 200, 200);
-  text-transform: uppercase; /* Improves readability */
+  text-transform: uppercase;
   overflow-wrap: break-word;
   word-wrap: break-word;
   hyphens: auto;
@@ -411,18 +467,18 @@ tr:nth-child(even) {
 
 .summary-card p {
   margin: 12px 0 0;
-  font-size: clamp(1.3rem, 2vw, 1.6rem);
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
   font-weight: 450;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Ensures numbers don’t break the layout */
+  text-overflow: ellipsis;
   color: rgb(245, 245, 245);
 }
 
 .chart-container {
   display: flex;
-  justify-content: center; /* Centers the chart */
+  justify-content: center;
   align-items: center;
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -454,7 +510,7 @@ tr:nth-child(even) {
 
 .modal {
   background: #181a1b;
-  padding: clamp(20px, 3vw, 30px);
+  padding: clamp(15px, 3vw, 30px);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   width: 100%;
@@ -472,7 +528,7 @@ tr:nth-child(even) {
   margin-top: 0;
   color: var(--primary-color);
   font-weight: 600;
-  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
 }
 
 .form-group {
@@ -490,18 +546,24 @@ tr:nth-child(even) {
 }
 
 .modal-btn {
-  padding: 12px 20px;
+  padding: 10px 16px; /* Reduced for mobile */
   border-radius: 6px;
   font-weight: 500;
   cursor: pointer;
   border: none;
 }
 
+@media (min-width: 768px) {
+  .modal-btn {
+    padding: 12px 20px;
+  }
+}
+
 .save-btn {
   width: 100%;
   background: var(--primary-color);
   color: white;
-  margin-right: 10px;
+  margin-right: 0;
   margin-bottom: 10px;
 }
 
@@ -511,14 +573,27 @@ tr:nth-child(even) {
   color: #eee;
 }
 
+/* Modal button layout for tablets and larger */
 @media (min-width: 480px) {
+
+  .logout-btn span{
+    display: inline;
+  }
+
   .modals {
     flex-direction: row;
     gap: 10px;
   }
 
   .save-btn {
+    margin-right: 10px;
     margin-bottom: 0;
+  }
+  
+  /* Optional: Create a button group for save/cancel */
+  .modal-buttons {
+    display: flex;
+    gap: 10px;
   }
 }
 
@@ -540,7 +615,7 @@ tr:nth-child(even) {
 }
 
 .empty-state i {
-  font-size: clamp(2rem, 3vw, 3rem);
+  font-size: clamp(1.5rem, 3vw, 3rem);
   margin-bottom: 15px;
   color: #ddd;
 }
@@ -548,11 +623,17 @@ tr:nth-child(even) {
 .data-input {
   background-color: #3a3e41;
   width: 100%;
-  padding: 12px 15px;
+  padding: 10px 15px; /* Reduced for mobile */
   border-radius: 6px;
   border: 1px solid #ddd;
-  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
   color: white;
+}
+
+@media (min-width: 768px) {
+  .data-input {
+    padding: 12px 15px;
+  }
 }
 
 .inplace-edit {
@@ -567,7 +648,7 @@ tr:nth-child(even) {
 
 .currency {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
 }
 
 .text-success {
@@ -578,7 +659,18 @@ tr:nth-child(even) {
   color: var(--danger-color);
 }
 
+/* Mobile-specific styles */
 @media (max-width: 480px) {
+
+  .logout-btn {
+    max-width: 40px;
+    justify-content: center;
+  }
+  
+  .logout-btn span {
+    display: none;
+  }
+
   .action-btns {
     flex-direction: column;
   }
@@ -586,5 +678,38 @@ tr:nth-child(even) {
   .delete-btn,
   .edit-btn {
     width: 100%;
+  }
+  
+  /* Adjust table for mobile viewing */
+  .expense-list {
+    overflow-x: auto;
+  }
+  
+  /* Optional: responsive text adjustments */
+  h2 {
+    text-align: center;
+    font-size: 12px;
+  }
+  
+  h2::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Optional: add print styles for better printing */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .container {
+    background: white;
+    box-shadow: none;
+  }
+  
+  .logout-btn, .add-btn, .action-btns {
+    display: none;
   }
 }

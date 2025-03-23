@@ -12,8 +12,14 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    
     <div class="container">
       <h2>Monthly Expense Tracker</h2>
+
+      <!-- Logout Button -->
+    <button class="logout-btn" onclick="logout()">
+      <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+    </button>
 
       <div class="filters">
         <div class="filter-group">
@@ -144,5 +150,12 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
+
+    <script>
+      function logout() {
+        localStorage.removeItem("user"); // Clear stored user data
+        window.location.href = "login.html"; // Redirect to login page
+      }
+    </script>
   </body>
 </html>
