@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    
+    <div class="container">
+      <h2>Monthly Expense Tracker</h2>
+
+      <!-- Logout Button -->
+    <button class="logout-btn" onclick="logout()">
+      <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+    </button>
+
+      <div class="filters">
+        <div class="filter-group">
+          <label for="yearSelect">
+            <i class="fa-solid fa-chart-line"></i>Year</label
+          >
+          <select id="yearSelect"></select>
+        </div>
+
+        <div class="filter-group">
+          <label for="monthSelect"
+            ><i class="fa-solid fa-hourglass-half"></i>Month</label
+          >
+          <select id="monthSelect">
+            <option>January</option>
+            <option>February</option>
+            <option>March</option>
+            <option>April</option>
+            <option>May</option>
+            <option>June</option>
+            <option>July</option>
+            <option>August</option>
+            <option>September</option>
+            <option>October</option>
+            <option>November</option>
+            <option>December</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="startAmount"
+            ><i class="fa-solid fa-indian-rupee-sign"></i>Budget</label
+          >
+          <input
+            id="startAmount"
+            placeholder="Enter Budget"
+            oninput="updateSummary()"
+          />
+        </div>
+      </div>
+
+      <div class="add-btn-container">
+        <button class="add-btn" onclick="openModal()">
+          <i class="fas fa-plus"></i>&emsp;Add New Expense
+        </button>
+
+        <p class="moving-gradient-text">Earn More Save More</p>
+      </div>
+
+      <div class="dashboard">
+        <div class="expense-list">
+          <table>
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Amount (₹)</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="expenseTable"></tbody>
+          </table>
+          <div id="emptyState" class="empty-state">
+            <i class="fas fa-receipt"></i>
+            <p>No expenses added yet</p>
+            <p>Click the "Add New Expense" button to get started</p>
+          </div>
+        </div>
+
+        <div class="summary">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>Total Budget (₹)</h4>
+              <p class="currency"><span id="totalBudget">0.00</span></p>
+            </div>
+            <div class="summary-card">
+              <h4>Total Expenses (₹)</h4>
+              <p class="currency"><span id="totalExpenses">0.00</span></p>
+            </div>
+            <div class="summary-card">
+              <h4>Remaining (₹)</h4>
+              <p class="currency"><span id="savings">0.00</span></p>
+            </div>
+            <div class="summary-card">
+              <h4>Budget Used (%)</h4>
+              <p><span id="budgetPercentage">0</span></p>
+            </div>
+          </div>
+
+          <div class="chart-container">
+            <canvas id="expenseChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <h3>Add New Expense</h3>
+        <div class="form-group">
+          <label for="modalDesc">Description</label>
+          <input
+            type="text"
+            id="modalDesc"
+            class="data-input"
+            placeholder="What did you spend on?"
+          />
+        </div>
+        <div class="form-group">
+          <label for="modalAmount">Amount (₹)</label>
+          <input
+            type="number"
+            id="modalAmount"
+            class="data-input"
+            placeholder="How much did you spend?"
+          />
+        </div>
+        <div class="modals">
+          <button class="modal-btn save-btn" onclick="saveExpense()">
+            <i class="fas fa-save"></i> Save
+          </button>
+          <button class="modal-btn cancel-btn" onclick="closeModal()">
+            <i class="fas fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+      function logout() {
+        localStorage.removeItem("user"); // Clear stored user data
+        window.location.href = "index.html"; // Redirect to login page
+      }
+    </script>
+  </body>
+</html>
