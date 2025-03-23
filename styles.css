@@ -51,10 +51,10 @@ h2 {
     var(--danger-color),
     var(--primary-color)
   );
-  background-size: 300% 300%;
+  background-size: 500% 500%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: movingGradient 3s infinite linear;
+  animation: movingGradient 10s infinite linear;
   display: inline-block;
 }
 
