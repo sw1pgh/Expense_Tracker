@@ -38,9 +38,24 @@ h2 {
   font-weight: 600;
   margin-bottom: clamp(15px, 2.5vw, 25px);
   position: relative;
-  padding-bottom: 10px;
+  margin-top: -10px;
+  padding-bottom: 15px;
   text-align: center;
   font-size: clamp(2rem, 4vw, 3rem);
+  text-transform: uppercase;
+  background: linear-gradient(90deg, 
+    var(--primary-color), 
+    var(--accent-color), 
+    var(--success-color), 
+    var(--warning-color), 
+    var(--danger-color),
+    var(--primary-color)
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: movingGradient 3s infinite linear;
+  display: inline-block;
 }
 
 h2:after {
@@ -204,14 +219,30 @@ button:focus {
 .expense-list {
   background: var(--dark-color);
   border-radius: 8px;
-  overflow-x: auto;
   width: 100%;
+  overflow-y: auto; /* Enables vertical scrolling */
+  max-height: 60vh; /* Adjust as needed */
+  min-height: 300px; /* Ensures a minimum height */
+}
+
+
+/* Optional: Fix table header while scrolling */
+.expense-list table {
+  width: 100%;
+  border-collapse: collapse;
+  position: relative;
+}
+
+.expense-list thead {
+  position: sticky;
+  top: 0;
+  background: #225599; /* Matches the existing header color */
+  z-index: 2;
 }
 
 .moving-gradient-text {
   font-size: clamp(0.8rem, 1.8vw, 1.2rem);
   font-weight: bold;
-  text-transform: uppercase;
   background: linear-gradient(90deg, 
     var(--primary-color), 
     var(--accent-color), 
@@ -355,11 +386,12 @@ tr:nth-child(even) {
 }
 
 .chart-container {
+  display: flex;
   max-width: 100%;
   height: auto;
   aspect-ratio: 1/1;
-  max-height: 300px;
-  margin: 30px auto;
+  max-height: 250px;
+  margin: 10px auto;
 }
 
 .modal-overlay {
