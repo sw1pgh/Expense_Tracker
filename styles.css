@@ -44,7 +44,7 @@ body {
   position: absolute;
   top: clamp(5px, 3vw, 15px); /* Responsive positioning */
   right: clamp(10px, 3vw, 30px);
-  max-width: 100px;
+  max-width: 115px;
   font-size: clamp(0.8rem, 1vw, 1rem);
   font-weight: bold;
   border-radius: 8px;
